@@ -1,0 +1,33 @@
+%%{init: {'flowchart': {'nodeSpacing': 50, 'rankSpacing': 70}}}%%
+flowchart LR
+  subgraph API_Layer ["API Layer"]
+    A["English Rule Ingestion API
+Receives raw English data quality rules."]
+    H["Validated SQL Output API
+Delivers the final, validated SQL conditions to the user or system."]
+  end
+  subgraph Processing_Layer ["Processing Layer"]
+    B["LangGraph Orchestrator
+Manages multi-stage rule processing, SQL generation, and validation workflow."]
+    G["SQL Validation & Refinement Module
+Checks SQL syntax, semantics, and refines conditions for accuracy."]
+  end
+  subgraph AI_Layer ["AI Layer"]
+    C["Rule Pattern & Embeddings Generator
+Analyzes English rules to extract patterns and create vector embeddings."]
+    F["SQL Condition Generator
+Crafts initial SQL statements based on analyzed patterns and retrieved rules."]
+  end
+  subgraph Data_Storage_Layer ["Data/Storage Layer"]
+    D["Chroma Vector DB
+Stores and retrieves rule embeddings for similarity search."]
+    E["Neo4j Graph DB
+Stores complex rule logic and interdependencies as a knowledge graph."]
+  end
+  A --> B
+  B --> C
+  C --> D
+  C --> E
+  B --> F
+  F --> G
+  G --> H
